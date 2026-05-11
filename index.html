@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>経営計画書プロンプト作成ダッシュボード</title>
+    <meta name="description" content="金融機関提出用の経営計画書ドラフトを作るための、財務顧問向けプロンプト作成ダッシュボードです。" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">External sharing ready</p>
+            <h1>経営計画書プロンプト作成</h1>
+            <p class="lead">金融機関提出用の経営計画書ドラフトを作るための、財務顧問向け入力ツールです。</p>
+          </div>
+          <button id="copyPrompt" class="primary-button" type="button">プロンプトをコピー</button>
+        </header>
+
+        <section class="notice-panel" aria-label="公開版の説明">
+          <div>
+            <p class="notice-label">公開URL</p>
+            <p id="currentUrl" class="notice-value">読み込み中</p>
+          </div>
+          <div>
+            <p class="notice-label">データの扱い</p>
+            <p class="notice-value">入力内容はこのブラウザ内だけで処理され、サーバーに保存されません。</p>
+          </div>
+          <p class="notice-note">
+            実際の提出前には、決算書・試算表・借入明細・資金繰り表との整合を必ず確認してください。
+          </p>
+        </section>
+
+        <div class="layout">
+          <form id="planForm" class="input-panel">
+            <section class="form-section">
+              <h2>顧問先の基本情報</h2>
+              <label>
+                会社名
+                <input name="companyName" placeholder="株式会社サンプル" />
+              </label>
+              <label>
+                業種・事業内容
+                <textarea name="business" rows="3" placeholder="例：地域密着型の飲食店。昼は定食、夜は宴会需要に対応。"></textarea>
+              </label>
+              <label>
+                代表者の考え・強み
+                <textarea name="strength" rows="3" placeholder="例：固定客が多く、原価管理と接客品質に強みがある。"></textarea>
+              </label>
+            </section>
+
+            <section class="form-section">
+              <h2>金融機関に伝えたい内容</h2>
+              <label>
+                提出目的
+                <select name="purpose">
+                  <option>新規融資の申込</option>
+                  <option>既存借入の条件変更</option>
+                  <option>資金繰り改善の説明</option>
+                  <option>伴走支援・定期報告</option>
+                </select>
+              </label>
+              <label>
+                資金使途
+                <textarea name="fundUse" rows="3" placeholder="例：店舗改装、運転資金、設備更新、人材採用など"></textarea>
+              </label>
+              <label>
+                金融機関に安心してほしいポイント
+                <textarea name="bankConcern" rows="3" placeholder="例：返済原資、改善施策の実行可能性、月次管理体制"></textarea>
+              </label>
+            </section>
+
+            <section class="form-section metrics">
+              <h2>数値のたたき台</h2>
+              <label>
+                直近売上
+                <input name="sales" placeholder="例：年商 8,000万円" />
+              </label>
+              <label>
+                営業利益・利益率
+                <input name="profit" placeholder="例：営業利益 320万円、営業利益率4%" />
+              </label>
+              <label>
+                借入・返済状況
+                <input name="debt" placeholder="例：既存借入 2,400万円、月返済45万円" />
+              </label>
+              <label>
+                今後3年の目標
+                <textarea name="goal" rows="3" placeholder="例：売上を年5%成長、原価率を2pt改善、月次資金繰り表を運用"></textarea>
+              </label>
+            </section>
+          </form>
+
+          <aside class="output-panel">
+            <div class="output-tabs" role="tablist" aria-label="出力切替">
+              <button class="tab active" data-tab="prompt" type="button">プロンプト</button>
+              <button class="tab" data-tab="outline" type="button">構成案</button>
+              <button class="tab" data-tab="checklist" type="button">確認事項</button>
+            </div>
+
+            <section id="prompt" class="output-view active">
+              <h2>生成プロンプト</h2>
+              <pre id="promptText"></pre>
+            </section>
+
+            <section id="outline" class="output-view">
+              <h2>経営計画書の構成案</h2>
+              <ol>
+                <li>会社概要・事業内容</li>
+                <li>現状分析：売上、利益、資金繰り、借入状況</li>
+                <li>課題の整理：外部環境、内部課題、金融機関の懸念</li>
+                <li>改善方針：売上施策、利益改善、固定費管理、資金繰り管理</li>
+                <li>数値計画：3か年損益計画、返済原資、資金繰り見通し</li>
+                <li>実行管理：月次確認項目、担当者、期限、金融機関への報告方法</li>
+              </ol>
+            </section>
+
+            <section id="checklist" class="output-view">
+              <h2>提出前チェック</h2>
+              <ul>
+                <li>売上計画の根拠が、客数・単価・件数などに分解されている</li>
+                <li>利益改善策が、実行時期と担当者まで書かれている</li>
+                <li>返済原資の説明が、営業キャッシュフローと矛盾していない</li>
+                <li>希望融資額、資金使途、返済方法が明確である</li>
+                <li>楽観的すぎる計画になっていないか、保守シナリオも確認した</li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
