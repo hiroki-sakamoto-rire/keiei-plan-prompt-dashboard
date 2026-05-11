@@ -7,7 +7,7 @@
 GitHub Pagesなどで公開したURLをここに記載します。
 
 ```text
-公開後に追記
+https://hiroki-sakamoto-rire.github.io/keiei-plan-prompt-dashboard/
 ```
 
 ## 使い方
